@@ -8,6 +8,7 @@ export default defineConfig([
     entry: {
       index: "src/index.ts",
       "redteam/index": "src/redteam/index.ts",
+      "redteam/tools/index": "src/redteam/tools/index.ts",
     },
     format: ["esm"],
     platform: "node",

@@ -562,6 +562,61 @@ if (comparable > 0) {
   pass("description comparison skipped", "no git baseline (first commit)");
 }
 
+// ── 5e. Package exports & redteam tools module ───────────────────────────────
+const pkg = JSON.parse(read(join(root, "package.json")));
+const exportsMap = pkg.exports || {};
+if (exportsMap["./redteam/tools"]) pass("export: ./redteam/tools", exportsMap["./redteam/tools"]);
+else fail("export: ./redteam/tools", "missing from package.json exports");
+
+const toolsLib = join(root, "lib", "redteam", "tools", "index.js");
+if (existsSync(toolsLib)) pass("lib/redteam/tools/index.js built");
+else fail("lib/redteam/tools/index.js built", "run npm run build");
+
+const agentCordis = join(root, "presets", "redteam", "agent.cordis.yml");
+if (existsSync(agentCordis)) {
+  const yml = read(agentCordis);
+  const pluginRefs = [...yml.matchAll(/name:\s*(dsh-purge\/[^\s\n]+)/g)].map((m) => m[1].trim());
+  for (const ref of pluginRefs) {
+    const sub = ref.replace(/^dsh-purge\//, "./");
+    const rel = sub === "./redteam/tools" ? exportsMap["./redteam/tools"] : exportsMap[sub] || exportsMap["."];
+    if (rel && existsSync(join(root, rel))) pass(`preset plugin ref: ${ref}`);
+    else fail(`preset plugin ref unresolved: ${ref}`, String(rel || "no export"));
+  }
+  if (yml.includes("演练台") && yml.includes("环境适配")) {
+    fail("agent.cordis stale UI ref", "still mentions 演练台/环境适配");
+  } else {
+    pass("agent.cordis UI ref updated");
+  }
+}
+
+if (existsSync(toolsLib)) {
+  const toolsSrc = read(toolsLib);
+  const registered = [...toolsSrc.matchAll(/name:\s*"redteam_[a-z_]+"/g)].map((m) => m[0].replace(/name:\s*"/, "").replace(/"$/, ""));
+  const requiredTools = [
+    "redteam_preflight",
+    "redteam_engagement_open",
+    "redteam_asset_add",
+    "redteam_vuln_add",
+    "redteam_chain_add",
+    "redteam_asset_query",
+    "redteam_vuln_query",
+    "redteam_agent_slot",
+  ];
+  for (const t of requiredTools) {
+    if (registered.includes(t)) pass(`redteam tool registered: ${t}`);
+    else fail(`redteam tool missing: ${t}`);
+  }
+  if (registered.length >= 20) pass("redteam tool count", `${registered.length} tools`);
+  else fail("redteam tool count low", `${registered.length}`);
+}
+
+// ── 5f. inject read cache (mtime) ───────────────────────────────────────────
+{
+  const tsStore = read(join(root, "src", "inject-store.ts"));
+  if (tsStore.includes("injectCache") && tsStore.includes("mtimeMs")) pass("inject-store mtime cache");
+  else fail("inject-store mtime cache", "missing cache layer");
+}
+
 // ── Report ───────────────────────────────────────────────────────────────────
 console.log("\n=== dsh-purge validate ===\n");
 for (const r of results) {

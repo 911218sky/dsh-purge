@@ -11,7 +11,7 @@ import {
   cpSync,
 } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { PurgeContext } from "../types.js";
 
@@ -98,18 +98,54 @@ export function installBundledAgents(): {
   return { action: copied > 0 ? "updated" : "kept", path: target, copied };
 }
 
-/** First-time copy of `presets/redteam` → `$DSH_HOME/.agent-presets/redteam`. */
+/** Sync bundled `presets/redteam` → `$DSH_HOME/.agent-presets/redteam` (hash compare). */
 export function installUserPreset(): {
-  action: "missing" | "installed" | "kept";
+  action: "missing" | "installed" | "updated" | "kept";
   path: string;
+  copied: number;
 } {
   const { presetDir } = packagePaths();
   const dest = join(userPresetRoot(), REDTEAM_PRESET_ID);
-  if (!existsSync(presetDir)) return { action: "missing", path: dest };
-  if (existsSync(dest)) return { action: "kept", path: dest };
-  mkdirSync(userPresetRoot(), { recursive: true });
-  cpSync(presetDir, dest, { recursive: true });
-  return { action: "installed", path: dest };
+  if (!existsSync(presetDir)) return { action: "missing", path: dest, copied: 0 };
+
+  const syncFile = (rel: string): boolean => {
+    const src = join(presetDir, rel);
+    const dst = join(dest, rel);
+    if (!existsSync(src)) return false;
+    mkdirSync(dirname(dst), { recursive: true });
+    const wanted = readFileSync(src);
+    let same = false;
+    try {
+      same = readFileSync(dst).equals(wanted);
+    } catch {
+      same = false;
+    }
+    if (same) return false;
+    writeFileSync(dst, wanted);
+    return true;
+  };
+
+  const walk = (dir: string, base = ""): string[] => {
+    const out: string[] = [];
+    for (const ent of readdirSync(join(presetDir, dir), { withFileTypes: true })) {
+      const rel = join(base, ent.name).replace(/\\/g, "/");
+      if (ent.isDirectory()) out.push(...walk(join(dir, ent.name), rel));
+      else out.push(rel);
+    }
+    return out;
+  };
+
+  let copied = 0;
+  if (!existsSync(dest)) {
+    mkdirSync(userPresetRoot(), { recursive: true });
+    cpSync(presetDir, dest, { recursive: true });
+    return { action: "installed", path: dest, copied: walk("").length };
+  }
+
+  for (const rel of walk("")) {
+    if (syncFile(rel)) copied += 1;
+  }
+  return { action: copied > 0 ? "updated" : "kept", path: dest, copied };
 }
 
 export function apply(ctx: PurgeContext): void {
@@ -118,7 +154,7 @@ export function apply(ctx: PurgeContext): void {
   const preset = installUserPreset();
   try {
     console.log(
-      `[dsh-purge/redteam] skills=${skills.action}(${skills.copied}) agents=${agents.action}(${agents.copied}) preset=${preset.action}`,
+      `[dsh-purge/redteam] skills=${skills.action}(${skills.copied}) agents=${agents.action}(${agents.copied}) preset=${preset.action}(${preset.copied})`,
     );
   } catch {
     /* ignore */

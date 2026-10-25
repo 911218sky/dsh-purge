@@ -38,14 +38,32 @@ export function seedPromptInject(dshHome = findDshHome()): {
   return { action: "seeded", path: fp };
 }
 
+let injectCache: { path: string; mtimeMs: number; text: string } | null = null;
+
+function injectMtime(fp: string): number {
+  try {
+    return fs.statSync(fp).mtimeMs;
+  } catch {
+    return 0;
+  }
+}
+
 export function readInjectText(dshHome = findDshHome()): string {
   seedPromptInject(dshHome);
-  return readTextFile(promptInjectPath(dshHome));
+  const fp = promptInjectPath(dshHome);
+  const mtimeMs = injectMtime(fp);
+  if (injectCache && injectCache.path === fp && injectCache.mtimeMs === mtimeMs) {
+    return injectCache.text;
+  }
+  const text = readTextFile(fp);
+  injectCache = { path: fp, mtimeMs, text };
+  return text;
 }
 
 export function writeInjectText(text: string, dshHome = findDshHome()): string {
   const fp = promptInjectPath(dshHome);
   writeTextFile(fp, String(text ?? ""));
+  injectCache = { path: fp, mtimeMs: injectMtime(fp), text: String(text ?? "") };
   return fp;
 }
 

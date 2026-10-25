@@ -8,6 +8,7 @@
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
     "./redteam": "./lib/redteam/index.js",
+    "./redteam/tools": "./lib/redteam/tools/index.js",
     "./package.json": "./package.json"
   },
   "files": [

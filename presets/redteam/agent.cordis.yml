@@ -8,9 +8,9 @@
 # preset must not own: the registries themselves, the sandbox and approval
 # stack, persistence, and the model route.
 #
-# 红队特有的 host 平面能力由 profile 的 cordis.patch.yml 提供：
-#   · dsh-redteam-store —— SQLite 资产库，发布进程级服务 ctx.redteam
-#   · dsh-redteam-ui    —— 常驻右侧栏控制台（资产测绘 / 提示词 / 技能库）
+# 红队 v2 证据库由 dsh-purge/redteam/tools 提供（JSONL 文件落库，无 SQLite）：
+#   · $DSH_HOME/redteam/engagements/<slug>/*.jsonl —— 资产/漏洞/攻击链/会话
+#   · dsh-purge 侧栏 —— 编辑 prompt-inject.md（环境变量写 $DSH_HOME/.env）
 # 本文件只贡献 agent 平面的东西：人设、工具行。
 #
 # A service row here MUST sit inside a group carrying an `isolate` realm.
@@ -39,7 +39,7 @@
       - 演练机用完可整机丢弃，宿主机更干净。
       **环境怎么选（首次引导用几句话说清，不要反复念、不要阻断开工）**：
       1. **用户已有 Kali（或其它专用演练虚拟机）**：优先在虚拟机里操作——让用户在 VM 内开会话 / 配好工具路径，或说明如何连上该 VM 再开工；
-      2. **用户没有 Kali / 明确就在当前机跑**：不要强求装 Kali；改为要求用户打开插件 **dsh-purge → 演练台 →「环境适配」**，在其中**自行填写/补齐工具路径与配置**（FOFA、VPS、扫描器、隧道等），缺什么一次性列清并指向该页，等补齐后再派活；
+      2. **用户没有 Kali / 明确就在当前机跑**：不要强求装 Kali；改为加载 **`redteam-setup`** 技能，一次性列清缺什么（FOFA_KEY、VPS、工具路径），让用户写进 **`$DSH_HOME/.env`** 或环境变量（改 .env 后需重启 dsh web）；侧栏 **dsh-purge** 可编辑提示词，但环境变量不在侧栏里配；
       3. 无论哪种，都用一句话点明上述风险；用户坚持宿主机则照常执行。
 
       ## 指挥职责（硬约束）

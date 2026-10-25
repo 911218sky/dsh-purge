@@ -60,6 +60,8 @@ function isPromptSaveBody(value: unknown): value is PromptSaveBody {
   return typeof value === "object" && value !== null;
 }
 
+const registeredRoutes = new Set<string>();
+
 function registerRoute(
   webServer: WebServerService,
   spec: {
@@ -68,12 +70,17 @@ function registerRoute(
     handler: (request: IncomingMessage, response: ServerResponse) => void | Promise<void>;
   },
 ): void {
+  const key = `${spec.method.toUpperCase()} ${spec.path}`;
+  if (registeredRoutes.has(key)) return;
   try {
     webServer.register(spec);
+    registeredRoutes.add(key);
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : String(error);
     if (!msg.includes("already")) {
       console.warn("[dsh-purge] route register:", msg);
+    } else {
+      registeredRoutes.add(key);
     }
   }
 }
