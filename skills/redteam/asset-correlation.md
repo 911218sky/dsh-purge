@@ -1,6 +1,9 @@
 ---
 name: asset-correlation
-description: 资产关联：域名↔IP↔C 段↔证书↔服务的图谱化
+description: >-
+  Links domains, IPs, /24 segments, certs, and services into asset graph via
+  redteam_asset_link. Use in assess stage after recon to prioritize targets,
+  or when user mentions 资产梳理/关联/C段/图谱.
 whenToUse: 信息收集阶段性收口，需要形成资产关系视图时
 role: recon
 enabled: true

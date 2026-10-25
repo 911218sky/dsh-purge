@@ -1,6 +1,9 @@
 ---
 name: fofa-recon
-description: 用 FOFA API 批量测绘靶标资产（域名/IP/端口/标题/指纹）；内置限速客户端，严格单线程 + 最小间隔 + 退避重试，避免触发 45012
+description: >-
+  Queries FOFA API with rate-limited client to map org/domain assets (IP, port,
+  title, fingerprint) into runs/ and asset DB. Use in recon when FOFA_KEY is set
+  and user gives 单位名/域名/资产测绘, or before recon-pipeline for full internet surface.
 whenToUse: 信息收集阶段需要快速铺开某单位/域名的互联网资产面时
 role: recon
 enabled: true

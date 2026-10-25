@@ -1,6 +1,9 @@
 ---
 name: recon-pipeline
-description: ProjectDiscovery 信息收集流水线：subfinder→dnsx→naabu→httpx→katana 一键铺开域名资产面
+description: >-
+  Runs the ProjectDiscovery recon pipeline (subfinder→dnsx→naabu→httpx) to expand
+  a domain into alive URLs with titles, tech stack, and ports. Use in recon stage
+  when the user mentions subdomain enum, asset discovery, pd-httpx, or 信息收集流水线.
 whenToUse: 信息收集阶段拿到域名/单位名后，系统化铺开子域→解析→端口→存活→页面与接口
 role: recon
 enabled: true

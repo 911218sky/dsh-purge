@@ -1,6 +1,9 @@
 ---
 name: passive-recon
-description: 被动信息收集：不接触目标主机，仅使用公开数据源
+description: >-
+  Gathers OSINT via crt.sh, DNS, whois, and public sources without touching target
+  hosts. Use in recon when stealth/no-active-scan is required, or as FOFA fallback
+  when user lacks FOFA_KEY or says 被动收集/证书透明.
 whenToUse: 需要在不暴露自身的情况下收集目标资产情报时
 role: recon
 enabled: true

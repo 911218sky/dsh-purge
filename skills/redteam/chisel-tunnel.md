@@ -1,6 +1,9 @@
 ---
 name: chisel-tunnel
-description: chisel 隧道：HTTP/WebSocket 封装的多路复用隧道，最易穿透出网限制与反向代理
+description: >-
+  Builds chisel HTTP/WebSocket multiplexed tunnel when egress is restricted or
+  only HTTP outbound allowed. Use when user mentions chisel/HTTP隧道/出网受限,
+  or as tunnel alternative to frp/suo5 after shell on target.
 whenToUse: suo5 不适用（非 WebShell 入口）、目标只能出 HTTP、需要端口转发或稳定 SOCKS 时
 role: internal
 enabled: true

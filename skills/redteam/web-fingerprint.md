@@ -1,6 +1,9 @@
 ---
 name: web-fingerprint
-description: Web 服务指纹识别：框架、中间件、CMS、组件版本
+description: >-
+  Identifies web stack (CMS, framework, middleware, versions) via whatweb, headers,
+  and favicon/hash tricks. Use in vuln-scan before nuclei -t selection, or when
+  user mentions 指纹识别/whatweb/CMS/组件版本.
 whenToUse: 已发现 HTTP/HTTPS 服务，需要识别技术栈时
 role: recon
 enabled: true

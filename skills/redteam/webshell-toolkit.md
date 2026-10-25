@@ -1,7 +1,10 @@
 ---
 name: webshell-toolkit
-description: 冰蝎 / 哥斯拉 / 中国蚁剑 的启动与用法，用于上传并管理 WebShell、维持访问、操作目标服务器
-whenToUse: 已获得上传点/文件写入/命令执行，需要落地并操作 WebShell 时
+description: >-
+  Connects and verifies Behinder/Godzilla/AntSword webshells after a shell URL
+  exists—not upload-filter bypass (that is file-upload-exploit). Use when user
+  mentions 冰蝎/哥斯拉/蚁剑/webshell连接/马已上传 when shell path is known.
+whenToUse: shell 路径已确认、需客户端连接与命令交互（上传绕过阶段用 file-upload-exploit）
 role: exploit
 enabled: true
 ---

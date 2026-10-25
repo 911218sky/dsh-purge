@@ -1,6 +1,9 @@
 ---
 name: dir-bruteforce
-description: 目录与文件爆破：后台入口、备份文件、配置泄露、源码与版本库暴露（ffuf/feroxbuster/dirsearch/gobuster）
+description: >-
+  Brute-forces directories and sensitive files (admin panels, backups, .git) with
+  ffuf/feroxbuster on alive URLs. Use in vuln-scan after httpx alive list exists,
+  or when user mentions 目录爆破/后台/备份文件/ffuf.
 whenToUse: 已确认 Web 存活但指纹无直接 Nday 线索；需要找后台入口、备份、配置、源码、上传点等隐藏路径
 role: vuln-scan
 enabled: true

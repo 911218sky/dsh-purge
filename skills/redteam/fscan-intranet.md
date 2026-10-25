@@ -1,6 +1,9 @@
 ---
 name: fscan-intranet
-description: fscan v2.2.1 内网综合扫描：存活探测、端口/服务识别、28 类弱口令爆破、未授权访问与高危漏洞（MS17-010/SMBGhost）、Redis 利用与 SOCKS5 隧道
+description: >-
+  Runs fscan tool through SOCKS proxy for intranet weak-password brute,
+  unauth Redis/MySQL, and MS17-010/SMBGhost checks—not for single-host nmap.
+  Use when user mentions fscan/内网弱口令/内网综合扫描; pair after gogo-intranet sweep.
 whenToUse: 进入内网（跳板机/WebShell/socks5 隧道）后快速铺开资产面、找弱口令与未授权、把可达性变成可打点
 role: internal
 enabled: true

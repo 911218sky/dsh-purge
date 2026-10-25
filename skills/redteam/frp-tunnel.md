@@ -1,6 +1,8 @@
 ---
 name: frp-tunnel
-description: frp 内网穿透：在自有 VPS 上跑 frps，在目标上跑 frpc，得到稳定 socks5 与端口映射
+description: >-
+  Deploys frps on VPS and frpc on target for stable SOCKS5 and port forwarding.
+  Use when suo5/chisel unsuitable and user has shell on target; mentions frp/内网穿透.
 whenToUse: 已有命令执行/RCE 且目标可出网；需要长期稳定隧道、把内网端口映射给用户直接访问时
 role: internal
 enabled: true

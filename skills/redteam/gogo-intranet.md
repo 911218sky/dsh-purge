@@ -1,6 +1,9 @@
 ---
 name: gogo-intranet
-description: gogo v2.15.0 高性能内网扫描引擎：智能/超智能模式、主动+被动指纹、关键信息提取（title/cert/JWT/邮箱/身份证）、nuclei 模板 POC、发包可控低噪声
+description: >-
+  Runs gogo intranet scan modes through SOCKS tunnel for alive hosts, services,
+  fingerprints, and embedded POC hits. Use in internal stage as first sweep after
+  tunnel is up—mandatory before per-host nmap; user mentions gogo/内网测绘/网段发现.
 whenToUse: 进入内网后对大网段（/16 /12）快速测绘、要指纹与关键信息、需要尽量少发包不被发现
 role: internal
 enabled: true

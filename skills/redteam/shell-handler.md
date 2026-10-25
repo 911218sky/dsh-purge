@@ -1,6 +1,9 @@
 ---
 name: shell-handler
-description: 反弹 Shell 与载荷投递：VPS 上起 MSF/nc/socat 监听接收 shell，或从目标主动拉取载荷落地
+description: >-
+  Handles reverse shell catch (nc/socat/msf) and curl/wget payload pull from VPS
+  to target. Use when exploit needs interactive shell or tool drop alongside
+  vps-reverse-shell; user mentions 反弹shell/nc监听/载荷投递.
 whenToUse: 需要 RCE/命令执行回连、投递后续载荷、把一次性命令执行变成可交互会话时
 role: exploit
 enabled: true

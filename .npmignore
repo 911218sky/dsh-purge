@@ -1,3 +1,7 @@
-lib/default-prompt-inject.md
-default-prompt-inject.md
-频道推广手册/
+src
+scripts
+tsconfig.json
+tsdown.config.ts
+node_modules
+*.map
+.git

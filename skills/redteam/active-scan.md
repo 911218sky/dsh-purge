@@ -1,6 +1,9 @@
 ---
 name: active-scan
-description: 主动端口与服务扫描（nmap/masscan），严格遵守授权范围
+description: >-
+  Performs authorized nmap/masscan service version scans on prioritized IPs from
+  asset list. Use after recon-pipeline for version confirmation, or when user
+  mentions nmap/端口扫描/服务版本—not for whole intranet (use gogo/fscan instead).
 whenToUse: 需要确认资产存活与开放端口时
 role: recon
 enabled: true

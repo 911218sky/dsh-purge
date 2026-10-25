@@ -1,7 +1,10 @@
 ---
 name: cn-proxy-pool
-description: 国内免费 HTTP/SOCKS5 代理池：抓取、验活、按需轮换；只用命令级代理参数，绝不改动本机网络与代理配置
-whenToUse: 目标有 WAF/封 IP 风险，或需要高频请求（接口爆破、目录扫描、口令喷洒）时
+description: >-
+  Fetches and validates free CN HTTP/SOCKS5 proxies for per-command use only—never
+  edits system proxy settings. Use when scanner IP is WAF-banned, nuclei/ffuf gets
+  blocked, or user asks for 代理池/代理池换IP/换IP/防WAF/防封/WAF封/代理轮换—not recon.
+whenToUse: 扫描或爆破被封 IP、WAF 拦截、需要代理池轮换出口时（非资产测绘）
 role: vuln-scan
 enabled: true
 ---

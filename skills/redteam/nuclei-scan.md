@@ -1,6 +1,9 @@
 ---
 name: nuclei-scan
-description: nuclei 模板化漏洞扫描：13,000+ 模板覆盖 CVE/暴露面/配置缺陷/默认口令，Nday 与 1day 的主力检测手段
+description: >-
+  Runs nuclei template scans against alive URL lists, filters by severity, and
+  records confirmed hits with HTTP evidence. Use in vuln-scan stage for Nday/1day,
+  CVE checks, template scan, or when user mentions nuclei/漏洞扫描.
 whenToUse: 漏洞发现阶段拿到存活资产清单后，做 Nday/1day 批量检测；或已知组件版本想快速确认是否有现成模板
 role: vuln-scan
 enabled: true

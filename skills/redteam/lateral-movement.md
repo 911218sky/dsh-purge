@@ -1,6 +1,9 @@
 ---
 name: lateral-movement
-description: 内网横向与提权：Impacket 套件（PtH/PsExec/WMI/DCOM/Kerberos/凭据转储）+ enum4linux/smbclient 信息枚举
+description: >-
+  Performs intranet lateral movement with Impacket (PtH, PsExec, WMI, Kerberos)
+  and SMB enum after domain creds obtained. Use in internal stage with active
+  tunnel; when user mentions 横向移动/域控/PsExec/Pass-the-Hash.
 whenToUse: 已进内网，需要用已有凭据或哈希横向到其它主机、枚举域环境、dump 凭据、找域控路径
 role: internal
 enabled: true

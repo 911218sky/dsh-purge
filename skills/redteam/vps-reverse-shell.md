@@ -1,6 +1,9 @@
 ---
 name: vps-reverse-shell
-description: 用自建 VPS（<你的VPS_IP>，SSH 私钥登录）做反弹 Shell 落地与中转：9000-9999 端口监听、非交互会话驱动、载荷投递、反向隧道
+description: >-
+  Sets up reverse shell listeners on operator VPS (9000-9999), payload delivery
+  via HTTP:9100, and non-interactive session handling. Use when webshell/RCE
+  needs shell callback; requires REDTEAM_VPS_HOST—see redteam-setup first.
 whenToUse: 目标无法回连本机 / 需要公网固定监听端口 / 需要长期在线跳板 / 需要让智能体自己下发命令到反弹 Shell
 role: exploit
 enabled: true
